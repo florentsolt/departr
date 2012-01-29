@@ -1,5 +1,5 @@
-require 'rubygems'
-require "departr"
+require "rubygems"
+require File.join(File.dirname(__FILE__), "lib", "departr")
 
 app = Departr::Server.new do
   set :environment, :production
