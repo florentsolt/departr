@@ -2,6 +2,8 @@
 
 Departr is a smart and fast startpage to help you reach other web sites.
 
+![Screenshot](https://github.com/florentsolt/departr/raw/master/screenshot.png)
+
 # How to install
 
     gem install departr
