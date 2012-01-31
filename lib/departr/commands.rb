@@ -6,12 +6,8 @@ module Departr
       File.join(Config.data_path, provider, user, 'commands')
     end
 
-    def get(provider, user, parse = true)
-      if parse
-        JSON.parse(File.read(filename(provider, user))) rescue sort(Config.commands)
-      else
-        File.read(filename(provider, user)) rescue sort(Config.commands).to_json
-      end
+    def get(provider, user)
+      JSON.parse(File.read(filename(provider, user))) rescue sort(Config.commands)
     end
 
     def time(provider, user)
@@ -30,8 +26,8 @@ module Departr
       end
     end
 
-    def default(parse = true)
-      parse ? Config.commands : Config.commands.to_json
+    def default
+      Config.commands
     end
 
     def add(provider, user, command)

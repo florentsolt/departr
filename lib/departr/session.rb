@@ -33,9 +33,8 @@ module Departr
       [user, session]
     end
 
-    def profile(provider, user, parse = true)
-      profile = File.read(filename(provider, user, :profile))
-      parse ? JSON.parse(profile) : profile
+    def profile(provider, user)
+      JSON.parse(File.read(filename(provider, user, :profile)))
     end
   end
 end

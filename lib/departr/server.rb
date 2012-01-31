@@ -126,7 +126,7 @@ module Departr
 
     get '/profile' do
       auth!
-      @profile = Session.profile(@provider, @user, false)
+      Session.profile(@provider, @user, false).to_json
     end
 
     #-----------------------------------------------------------------------------
@@ -135,12 +135,12 @@ module Departr
 
     get '/settings' do
       auth!
-      haml :settings
+      haml :settings, :layout => false
     end
 
     post '/settings' do
       auth!
-      Settings.save(@provider, @user, request.body.read)
+      Settings.save(@provider, @user, JSON.parse(request.body.read))
       status 200
     end
 
@@ -170,7 +170,7 @@ module Departr
       auth!
       content_type :json
       etag "command-" + Command.etag(@provider, @user) if production?
-      Command.get(@provider, @user, false)
+      Command.get(@provider, @user).to_json
     end
 
     #-----------------------------------------------------------------------------
@@ -184,13 +184,13 @@ module Departr
     get '/' do
       if auth?
         etag "index-#{Command.etag(@provider, @user)}-#{Settings.etag(@provider, @user)}" if production?
-        @commands = Command.get(@provider, @user, false)
+        @commands = Command.get(@provider, @user)
         @settings = Settings.get(@provider, @user)
       else
         etag "default-#{Digest::SHA1.hexdigest(Command.default(false))}" if production?
         response.delete_cookie("user")
         response.delete_cookie("session")
-        @commands = Command.default(false)
+        @commands = Command.default
         @settings = Settings.default
       end
       haml :index

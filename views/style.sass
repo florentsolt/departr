@@ -55,6 +55,14 @@ a, a:hover, a:link, a:visited
     font-weight: normal
     text-align: center
 
+#github
+  position: absolute
+  top: 0px
+  right: 0px
+
+  img
+    border: none
+
 #header
   height: 2em
   line-height: 2em
@@ -114,7 +122,7 @@ div#settings
 
 // --------------------- Auto completer --------------------------
 
-.moocomplete
+.autocomplete
   margin-top: 4px
   border: 1px solid #ccc
   background-color: #fff
@@ -131,6 +139,7 @@ div#settings
     font-size: 15px
     font-style: italic
     line-height: 1.5em
+    display: none
 
   div.hovered
     background: $webkit_gradient_inverted
@@ -138,6 +147,10 @@ div#settings
     color: #fff
     -moz-border-radius: 6px
     -webkit-border-radius: 6px
+
+
+  div.match
+    display: block
 
 // --------------------- Command --------------------------
 

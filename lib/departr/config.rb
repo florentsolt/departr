@@ -5,15 +5,18 @@ module Departr
     @data = {
       :data_path => "/tmp",
 
-      :google_feeling_lucky => true,
+      # Default settings
+
       :open_in_new_page => false,
-      :google_domain => "com",
+      :default_search => "http://www.google.com/search?ie=UTF-8&oe=UTF-8&q=",
 
       :github => true,
       :calendar => true,
       :clock1 => "Europe/Paris",
       :clock2 => "America/New_York",
       :clock3 => "America/Los_Angeles",
+
+      # Default commands
 
       :commands => [
         {'name' => "google search for {words}", 'url' => "http://www.google.com/search?rls=en&q={words}&ie=UTF-8&oe=UTF-8"},

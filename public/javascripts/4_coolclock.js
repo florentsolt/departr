@@ -85,7 +85,7 @@ CoolClock.prototype = {
 		this.skinId         = options.skinId || CoolClock.config.defaultSkin;
 		this.displayRadius  = options.displayRadius || CoolClock.config.defaultRadius;
 		this.showSecondHand = typeof options.showSecondHand == "boolean" ? options.showSecondHand : true;
-		this.gmtOffset      = (options.gmtOffset != null && options.gmtOffset != '') ? parseFloat(options.gmtOffset) : null;
+		this.gmtOffset      = (options.gmtOffset !== null && options.gmtOffset !== '') ? parseFloat(options.gmtOffset) : null;
 		this.showDigital    = typeof options.showDigital == "boolean" ? options.showDigital : true;
 		this.logClock       = typeof options.logClock == "boolean" ? options.logClock : false;
 		this.logClockRev    = typeof options.logClock == "boolean" ? options.logClockRev : false;
@@ -280,7 +280,7 @@ CoolClock.prototype = {
 	// Check the time and display the clock
 	refreshDisplay: function() {
 		var now = new Date();
-		if (this.gmtOffset != null) {
+		if (this.gmtOffset !== null) {
 			// Use GMT + gmtOffset
 			var offsetNow = new Date(now.valueOf() + (this.gmtOffset * 1000 * 60 * 60));
 			this.render(offsetNow.getUTCHours(),offsetNow.getUTCMinutes(),offsetNow.getUTCSeconds());

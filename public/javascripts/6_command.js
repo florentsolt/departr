@@ -149,6 +149,9 @@ var Command = {
             headers: { 'Content-Type': 'application/json' },
             onFailure: function() {
                 Application.notice('An error occured');
+            },
+            onSuccess: function() {
+                Command.autocompleter.setList(Command.data);
             }
         }).post(JSON.encode(Command.data));
         this.hide();
@@ -174,20 +177,10 @@ var Command = {
             $('question').setStyle('display', 'none');
         }
 
-        var defaultSearch = 'http://www.google.' + Settings.google_domain + '/search?ie=UTF-8&oe=UTF-8&q=' + encodeURIComponent(this.input.value);
-
-        if (Settings.google_feeling_lucky) {
-            e = this.input.lastEvent;
-            if (e && e.key == "enter" && (e.alt || e.control || e.meta || e.shift)) {
-                Command.go(defaultSearch + '&btnI=1');
-                return;
-            }
-        }
-
         // Execute selected command
         if (Command.selected) {
             Command.go(Command.selected);
-            return
+            return;
         }
 
         // Default command
@@ -200,7 +193,7 @@ var Command = {
                 Command.go('http://' + this.input.value.replace(/^\s+/, ''));
             } else {
                 // Fallback to google
-                Command.go(defaultSearch);
+                Command.go(Settings.default_search + encodeURIComponent(this.input.value));
             }
         }
 
@@ -219,7 +212,7 @@ var Command = {
     },
 
     init: function() {
-        Command.autocompleter = new MooComplete('input', {
+        Command.autocompleter = new AutoComplete('input', {
             list: Command.data,
             size: 10,
             mode: 'partial',
@@ -230,17 +223,15 @@ var Command = {
                 return command.name;
             },
             set: function(command) {
-                if (command) {
-                    Command.selected = command.url;
-                    return command.name;
-                } else {
-                    Command.selected = false;
-                    return "";
-                }
+                return command.name;
             },
-            filters:[function(o,v) {
+            filters: [function(o,v) {
                 return o.match(new RegExp(v.escapeRegExp().replace(/\s+/, '.*'), 'i'))
             }]
+        }).addEvent('complete', function(value) {
+            Command.selected = value.url;
+        }).addEvent('abort', function() {
+            Command.selected = false;
         });
 
         // Hook command line submit

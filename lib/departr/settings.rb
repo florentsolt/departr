@@ -3,7 +3,9 @@ module Departr
     extend self
 
     KEYS = [
-      :google_feeling_lucky, :open_in_new_page, :google_domain
+      :default_search, :open_in_new_page,
+      :github, :calendar,
+      :clock1, :clock2, :clock3
     ]
 
     def filename(provider, user)
@@ -15,19 +17,20 @@ module Departr
     end
 
     def get(provider, user)
-      File.read(filename(provider, user)) rescue default
+      default.merge(JSON.parse(File.read(filename(provider, user)))) rescue default
     end
 
     def save(provider, user, data)
       File.open(filename(provider, user), 'w') do |fd|
-        fd.write data
+        fd.write data.to_json
       end
     end
 
     def default
       hash = {}
-      KEYS.each { |key| hash[key] = Config.get(key) }
-      hash.to_json
+      # Do not keep symbol because it's save in JSON
+      KEYS.each { |key| hash[key.to_s] = Config.get(key) }
+      hash
     end
 
   end

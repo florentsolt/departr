@@ -104,22 +104,39 @@ var Application = {
             param: {
                 url: "/settings",
                 onRequestComplete: function() {
-                    $('google_domain').addEvent('change', function() {
-                        Settings.google_domain = this.value;
-                    })
-                    $('google_domain').value = Settings.google_domain;
+                    $('setting_default_search').addEvent('change', function() {
+                        Settings.default_search = this.value;
+                    });
+                    $('setting_default_search').value = Settings.default_search;
 
-                    $('google_feeling_lucky').addEvent('click', function() {
-                        Settings.google_feeling_lucky = !Settings.google_feeling_lucky;
-                    })
-                    if (Settings.google_feeling_lucky)
-                        $('google_feeling_lucky').checked = true;
-
-                    $('open_in_new_page').addEvent('click', function() {
+                    $('setting_open_in_new_page').addEvent('click', function() {
                         Settings.open_in_new_page = !Settings.open_in_new_page;
                     })
-                    if (Settings.open_in_new_page)
-                        $('open_in_new_page').checked = true;
+                    $('setting_open_in_new_page').checked = (Settings.open_in_new_page === true);
+
+                    $('setting_github').addEvent('click', function() {
+                        Settings.github = !Settings.github;
+                        $(window.parent.document).getElement('#github').setStyle('display', Settings.github === true ? 'block': 'none');
+                    })
+                    $('setting_github').checked = (Settings.github === true);
+
+                    $('setting_calendar').addEvent('click', function() {
+                        Settings.calendar = !Settings.calendar;
+                        $(window.parent.document).getElement('#date').setStyle('display', Settings.calendar === true ? 'block': 'none');
+                    })
+                    $('setting_calendar').checked = (Settings.calendar === true);
+
+                    $('setting_clock1').addEvent('change', function() {
+                        Settings.clock1 = this.value;
+                    });
+
+                    $('setting_clock2').addEvent('change', function() {
+                        Settings.clock2 = this.value;
+                    });
+
+                    $('setting_clock3').addEvent('change', function() {
+                        Settings.clock3 = this.value;
+                    });
                 }
             }
         });

@@ -1,4 +1,7 @@
 -# coding: utf-8
+%a#github{:href => "http://github.com/florentsolt/departr", :style => "display: #{@settings["github"] ? "block" : "none"}"}
+  %img{:src => "https://a248.e.akamai.net/assets.github.com/img/71eeaab9d563c2b3c590319b398dd35683265e85/687474703a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67", :alt => "Fork me on GitHub"}
+
 #header
   - if @config.get(:rpx)
     %a#signin{:href => "https://#{@config.get(:rpx)[:realm]}.rpxnow.com/openid/embed?token_url=" + URI.escape(host + "/signin")}
@@ -16,45 +19,41 @@
     %label#label Question
     %input{:type => :text, :id => :answer, :name => :answer}
 #special
-  - if @config.calendar
-    #date.clock
-      .wday
-      .day
-  - if @config.clock1
-    %canvas#clock1.clock
-  - if @config.clock2
-    %canvas#clock2.clock
-  -if @config.clock3
-    %canvas#clock3.clock
+  #date.clock{:style => "display: #{@settings["calendar"] ? "block" : "none"}"}
+    .wday
+    .day
+  %canvas#clock1.clock{:style => "display: #{(@settings["clock1"] && @settings["clock1"] != "-none-") ? "block" : "none"}"}
+  %canvas#clock2.clock{:style => "display: #{(@settings["clock2"] && @settings["clock2"] != "-none-") ? "block" : "none"}"}
+  %canvas#clock3.clock{:style => "display: #{(@settings["clock3"] && @settings["clock3"] != "-none-") ? "block" : "none"}"}
 
 :javascript
 
   // Globals
-  Command.data = #{@commands};
-  Settings = #{@settings};
+  Command.data = #{@commands.to_json};
+  Settings = #{@settings.to_json};
 
   window.addEvent('domready', function() {
     Application.init();
     Command.init();
 
     // Clock 1
-    if ($('clock1')) {
+    if ($('clock1').getStyle('display') == 'block') {
       new CoolClock({
         canvasId: 'clock1',
         displayRadius: 40,
-        gmtOffset: #{clock_offset(@config.clock1)},
-        label: #{clock_label(@config.clock1)},
+        gmtOffset: #{clock_offset(@settings["clock1"])},
+        label: #{clock_label(@settings["clock1"])},
         fontSize: '30px'
       });
     }
 
     // Clock 2
-    if ($('clock2')) {
+    if ($('clock2').getStyle('display') == 'block') {
       new CoolClock({
         canvasId: 'clock2',
         displayRadius: 40,
-        gmtOffset: #{clock_offset(@config.clock2)},
-        label: #{clock_label(@config.clock2)},
+        gmtOffset: #{clock_offset(@settings["clock2"])},
+        label: #{clock_label(@settings["clock2"])},
         fontSize: '30px'
       });
     }
@@ -64,8 +63,8 @@
       new CoolClock({
         canvasId: 'clock3',
         displayRadius: 40,
-        gmtOffset: #{clock_offset(@config.clock3)},
-        label: #{clock_label(@config.clock3)},
+        gmtOffset: #{clock_offset(@settings["clock3"])},
+        label: #{clock_label(@settings["clock3"])},
         fontSize: '30px'
       });
     }
