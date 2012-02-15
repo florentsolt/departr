@@ -2,8 +2,8 @@
 
 Gem::Specification.new do |s|
   s.name        = "departr"
-  s.version     = 0.2
-  s.date        = '2012-01-24'
+  s.version     = 0.4
+  s.date        = '2012-02-15'
   s.platform    = Gem::Platform::RUBY
   s.author      = "Florent Solt"
   s.email       = "florent@solt.biz"
