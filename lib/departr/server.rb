@@ -187,7 +187,7 @@ module Departr
         @commands = Command.get(@provider, @user)
         @settings = Settings.get(@provider, @user)
       else
-        etag "default-#{Digest::SHA1.hexdigest(Command.default(false))}" if production?
+        etag "default-#{Digest::SHA1.hexdigest(Command.default.inspect)}" if production?
         response.delete_cookie("user")
         response.delete_cookie("session")
         @commands = Command.default
