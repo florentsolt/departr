@@ -4,8 +4,7 @@ module Departr
 
     KEYS = [
       :default_search, :open_in_new_page,
-      :github, :calendar,
-      :clock1, :clock2, :clock3
+      :calendar, :clock1, :clock2, :clock3
     ]
 
     def filename(provider, user)
