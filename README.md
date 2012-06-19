@@ -2,6 +2,11 @@
 
 Departr is a smart and fast startpage to help you reach other web sites.
 
+# Demo
+
+It's up and running here http://departr.solt.biz/
+
+Anyway, it's look like that :
 ![Screenshot](https://github.com/florentsolt/departr/raw/master/screenshot.png)
 
 # How to install
