@@ -114,12 +114,6 @@ var Application = {
                     })
                     $('setting_open_in_new_page').checked = (Settings.open_in_new_page === true);
 
-                    $('setting_github').addEvent('click', function() {
-                        Settings.github = !Settings.github;
-                        $(window.parent.document).getElement('#github').setStyle('display', Settings.github === true ? 'block': 'none');
-                    })
-                    $('setting_github').checked = (Settings.github === true);
-
                     $('setting_calendar').addEvent('click', function() {
                         Settings.calendar = !Settings.calendar;
                         $(window.parent.document).getElement('#date').setStyle('display', Settings.calendar === true ? 'block': 'none');

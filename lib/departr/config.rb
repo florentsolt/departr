@@ -10,7 +10,6 @@ module Departr
       :open_in_new_page => false,
       :default_search => "http://www.google.com/search?ie=UTF-8&oe=UTF-8&q=",
 
-      :github => true,
       :calendar => true,
       :clock1 => "Europe/Paris",
       :clock2 => "America/New_York",
