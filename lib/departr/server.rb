@@ -11,23 +11,6 @@ module Departr
       super
       Departr::Config.instance_eval(&blk) if block_given?
       @config = Config
-
-      # when called in the constructor, it remains persistant
-      # if not, it's rebuild every time
-      javascripts! if production?
-    end
-
-    def javascripts!
-      return @javascripts if not @javascripts.nil?
-      @javascripts = ''
-      Dir[File.join(settings.root, 'public', 'javascripts', '*.js')].sort.delete_if do |file|
-        not File.basename(file).match(/^\d+_/)
-      end.each do |file|
-        @javascripts << "\n/* #{File.basename(file)} */\n"
-        @javascripts << File.read(file)
-      end
-      @javascripts_checksum = Digest::SHA1.hexdigest(@javascripts)
-      @javascripts = JSMin.minify(@javascripts) if production?
     end
 
     #-----------------------------------------------------------------------------
@@ -38,12 +21,12 @@ module Departr
 
     set :sass, {
       :cache_store => Sass::CacheStores::Memory.new,
-      :style => production? ? :compressed : :expanded
+      :style => Server.production? && :compressed || :expanded
     }
 
     set :haml, {
       :format => :xhtml,
-      :ugly => production?
+      :ugly => Server.production?
     }
 
     set :reload_templates, true if development?
@@ -92,14 +75,26 @@ module Departr
 
     get '/javascripts/all.js' do
       content_type :js
-      javascripts!
-      etag "js-#{@javascripts_checksum}" if production?
-      @javascripts
+
+      if not defined? @@javascripts
+        @@javascripts = ''
+        Dir[File.join(settings.root, 'public', 'javascripts', '*.js')].sort.delete_if do |file|
+          not File.basename(file).match(/^\d+_/)
+        end.each do |file|
+          @@javascripts << "\n/* #{File.basename(file)} */\n"
+          @@javascripts << File.read(file)
+        end
+        @@javascripts_checksum = Digest::SHA1.hexdigest(@@javascripts)
+        @@javascripts = JSMin.minify(@@javascripts) if Server.production?
+      end
+
+      etag "js-#{@@javascripts_checksum}" if Server.production?
+      @@javascripts
     end
 
     get '/stylesheets/all.css' do
       content_type :css
-      if production?
+      if Server.production?
         time = File.mtime(File.join(settings.root, 'views', 'style.sass'))
         etag "css-#{time.to_i}"
       end
@@ -169,7 +164,7 @@ module Departr
     get '/command/all' do
       auth!
       content_type :json
-      etag "command-" + Command.etag(@provider, @user) if production?
+      etag "command-" + Command.etag(@provider, @user) if Server.production?
       Command.get(@provider, @user).to_json
     end
 
@@ -183,11 +178,11 @@ module Departr
 
     get '/' do
       if auth?
-        etag "index-#{Command.etag(@provider, @user)}-#{Settings.etag(@provider, @user)}" if production?
+        etag "index-#{Command.etag(@provider, @user)}-#{Settings.etag(@provider, @user)}" if Server.production?
         @commands = Command.get(@provider, @user)
         @settings = Settings.get(@provider, @user)
       else
-        etag "default-#{Digest::SHA1.hexdigest(Command.default.inspect)}" if production?
+        etag "default-#{Digest::SHA1.hexdigest(Command.default.inspect)}" if Server.production?
         response.delete_cookie("user")
         response.delete_cookie("session")
         @commands = Command.default
