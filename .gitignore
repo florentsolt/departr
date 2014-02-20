@@ -1,1 +1,3 @@
 config.ru
+Gemfile.lock
+.bundle
