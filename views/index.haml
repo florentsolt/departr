@@ -1,4 +1,11 @@
 -# coding: utf-8
+#background
+
+#credits
+  %a{:href => "http://500px.com/photos/#{@background['id']}"}
+    ©
+    = @background['user']['fullname']
+
 #header
   - if @config.get(:rpx)
     %a#signin{:href => "https://#{@config.get(:rpx)[:realm]}.rpxnow.com/openid/embed?token_url=" + URI.escape(host + "/signin")}
@@ -9,19 +16,15 @@
   %a{:id => :signout, :href => '#'} Sign Out
 
 %form{:id => :commandline}
-  #logo= "depart<span>r</span>"
-  %img{:src => 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAGFwAABhcBlmjpmQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAIcSURBVEiJtZaxaxRREIe/d0aMQUUCz+ZZaidYCKJgI4rohYgQRUTRP0BQsA9iQK0EwVJsRfRMIJjLaZVGEKwsLGzEZrAYsDlziTl1LHYP9ta7vd3lduAV++O3+zHvzcxbJ2pUGcG7Y8AD4BCw4qoEBu8uAi+AbbHUrVUIqwPPEzCAz5VkGLw7CTSByYT8F5gde4bBu+PAcgr2B7ghas2J2HQUmBoDbxp4BuxKaFvAFVFb7AnzgFW0OsBZUaO3asAR4NcYskvHT6Auaq2kWBO1C8A+4CqwCGyMCXhT1NbS4n9VGrybAurAHDAD7C4JnBG1ZlqcSAui1gEaQCN4NwmcieHngb0l4cOBKfgmUYkvB++2A6di+GVKZp4JTMG7QAtoBe8CcK4MsHDjB+8elYUVBgbv5oE7CekNsF4JMHh3C1hISI+JCmmpCLDvDIN3O4DZtA4cBO4lnu+K2kL8TgO4VhgYw5bIPh8Dbovak4T2FmiTs2qTWzoN7AG6Gf77KVivdVbywPqAovZd1E4QNfdpYG2A/9uQ77wqDEyAO8An4MAA/7DsV8lZrcOq9DqwH/hKf6Zbg8yitkF0w5cGPiUaX4eBh6OAceTa1oGjTdTawEuA4N174HfszQI2ia62nVnAkY0vauvAR6Kp8m6Eb3XU9/JOmkvAnKhlZQg5tjXXbSFqksdH1I+bRH9sP0oD84aotYN3r4EvovZhkOcfNY7IMKY9rjcAAAAASUVORK5CYII='}
   %input{:type => :text, :id => :input, :name => :input}
   #question
     %label#label Question
     %input{:type => :text, :id => :answer, :name => :answer}
-#special
-  #date.clock{:style => "display: #{@settings["calendar"] ? "block" : "none"}"}
-    .wday
-    .day
-  %canvas#clock1.clock{:style => "display: #{(@settings["clock1"] && @settings["clock1"] != "-none-") ? "block" : "none"}"}
-  %canvas#clock2.clock{:style => "display: #{(@settings["clock2"] && @settings["clock2"] != "-none-") ? "block" : "none"}"}
-  %canvas#clock3.clock{:style => "display: #{(@settings["clock3"] && @settings["clock3"] != "-none-") ? "block" : "none"}"}
+:css
+
+  #background {
+    background-image: url(#{@background['image_url']});
+  }
 
 :javascript
 
@@ -32,37 +35,4 @@
   window.addEvent('domready', function() {
     Application.init();
     Command.init();
-
-    // Clock 1
-    if ($('clock1').getStyle('display') == 'block') {
-      new CoolClock({
-        canvasId: 'clock1',
-        displayRadius: 40,
-        gmtOffset: #{clock_offset(@settings["clock1"])},
-        label: #{clock_label(@settings["clock1"])},
-        fontSize: '30px'
-      });
-    }
-
-    // Clock 2
-    if ($('clock2').getStyle('display') == 'block') {
-      new CoolClock({
-        canvasId: 'clock2',
-        displayRadius: 40,
-        gmtOffset: #{clock_offset(@settings["clock2"])},
-        label: #{clock_label(@settings["clock2"])},
-        fontSize: '30px'
-      });
-    }
-
-    // Clock 3
-    if ($('clock3')) {
-      new CoolClock({
-        canvasId: 'clock3',
-        displayRadius: 40,
-        gmtOffset: #{clock_offset(@settings["clock3"])},
-        label: #{clock_label(@settings["clock3"])},
-        fontSize: '30px'
-      });
-    }
   });

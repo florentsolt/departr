@@ -1,6 +1,6 @@
 
-$color1: #eee
-$color2: #fff
+$color1: rgba(238,238,238,0.8)
+$color2: rgba(255,255,255,0.8)
 $webkit_gradient: -webkit-gradient(linear, left top, left bottom, from($color1), to($color2))
 $moz_gradient: -moz-linear-gradient(top,$color1,$color2)
 
@@ -26,60 +26,63 @@ html
 a, a:hover, a:link, a:visited
   color: inherit
 
-#logo
-  margin-top: -49px
-  margin-bottom: 20px
-  font-size: 30px
-  text-align: right
-  text-shadow: white 1px 1px 0px
-
-  span
-    color: #54acff
-
-.baseline
-  opacity: 0.3
-  filter: alpha(opacity=30)
-  font-size: 15pt
-  display: block
+#background
+  width: 100%
+  height: 100%
   position: absolute
-  top: 400px
-  width: 600px
-  left: 150px
-  text-align: right
+  top: 0px
+  left: 0px
+  color: transparent
+  background-size: cover
+  background-position: 50% 50%
+  background-repeat: none
+  z-index: -1
 
-  em
-    margin-bottom: 1em
-    font-weight: bold
-    font-size: 20pt
-    display: block
-    font-weight: normal
-    text-align: center
+#background:after
+  width: 100%
+  height: 100%
+  position: absolute
+  top: 0px
+  left: 0px
+  content: ''
+  background-image: url('data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhJREFUeNpiYGBgePz//38GRhABAgABBgBFTAbfCBNE2AAAAABJRU5ErkJggg==')
+  
 
-#header
+#credits, #header
+  background-color: rgba(255,255,255,0.4)
+  color: black
+  opacity: 0.8
+  filter: alpha(opacity=80)
+  font-size: 14px
   height: 2em
   line-height: 2em
+
+#credits
+  position: absolute
+  left: 0px
+  bottom: 0px
+  z-index: 0
+  width: 100%
+  text-align: right
+
+  a
+    text-decoration: none
+    padding-right: 1em
+
+#header
   text-align: center
   z-index: 100
-  text-shadow: white 1px 1px 0px
 
   a
     padding: 0px 1em
     margin: 0px
     padding-left: 16px
-    color: black
     text-decoration: none
     background-position: center left
     background-repeat: no-repeat
-    font-size: 14px
-    opacity: 0.3
-    filter: alpha(opacity=30)
 
   #signin, #signout, #edit, #settings
     display: none
-
-#header a:hover
-  opacity: 1
-  filter: alpha(opacity=100)
 
 #profile
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAMCAYAAACwXJejAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAFBJREFUGNNjYEAAfSB+D8T/obQ+AxawH6oAhveTragfTVE/Aw6QD8T1UJo8IA/E69GsWw8Vhyt4j6YAht/DFK7HoQDZRLwKYJg4RecJKDgPAMVHQDY4+DlXAAAAAElFTkSuQmCC)
@@ -152,18 +155,13 @@ div#settings
   margin: 200px auto auto auto
   width: 600px
   height: auto
-  padding: 20px
+  padding: 15px 5px
   text-align: center
   border: 1px solid #ccc
-  -webkit-border-radius: 10px
-  -moz-border-radius: 10px 10px
   border-radius: 10px 10px
   background-color: $color1
   background: $webkit_gradient
   background: $moz_gradient
-
-#commandline img
-  margin-right: 10px
 
 #input
   -webkit-appearance: textfield
@@ -207,50 +205,6 @@ div#settings
 
   #label,#answer
     font-size: 20px
-
-#special
-  display: block
-  width: 600px
-  margin: auto
-  text-align: center
-  position: relative
-  padding-top: 55px
-
-  .clock
-    margin-left: 50px
-    float: left
-    width: 100px
-    height: 140px
-    border: none
-
-  #date
-    height: 80px
-    text-align: center
-    border: 1px solid #ccc
-    -webkit-border-radius: 10px
-    -moz-border-radius: 10px 10px
-    border-radius: 10px 10px
-    background-color: $color1
-    background: $webkit_gradient
-    background: $moz_gradient
-
-    .wday
-      margin: 1px
-      padding: 2px
-      -webkit-border-top-left-radius: 10px
-      -webkit-border-top-right-radius: 10px
-      -moz-border-radius-topleft: 10px
-      -moz-border-radius-topright: 10px
-      border-top-left-radius: 10px
-      border-top-right-radius: 10px
-      background-color: $color2
-      background: $webkit_gradient_inverted
-      background: $moz_gradient_inverted
-      
-
-    .day
-      font-size: 35pt
-      font-weight: bold
       
 // --------------------- Edit Popup --------------------------
 

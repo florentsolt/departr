@@ -177,6 +177,8 @@ module Departr
     end
 
     get '/' do
+      images = Marshal.load(File.read(File.join(__dir__, '..', 'images.msh')))
+      @background = images.sample
       if auth?
         etag "index-#{Command.etag(@provider, @user)}-#{Settings.etag(@provider, @user)}" if Server.production?
         @commands = Command.get(@provider, @user)

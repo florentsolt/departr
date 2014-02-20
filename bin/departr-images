@@ -1,0 +1,39 @@
+#!/usr/bin/env ruby
+require 'oauth'
+require 'json'
+
+if ARGV.size != 4
+    puts "Usage: #{$0} CONSUMER_KEY CONSUMER_SECRET USERNAME PASSWORD"
+    exit
+end
+
+CONSUMER_KEY = ARGV.shift
+CONSUMER_SECRET = ARGV.shift
+BASE_URL = 'https://api.500px.com'
+USERNAME = ARGV.shift
+PASSWORD = ARGV.shift
+
+
+consumer = OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, {
+    :site               => BASE_URL,
+    :request_token_path => "/v1/oauth/request_token",
+    :access_token_path  => "/v1/oauth/access_token",
+    :authorize_path     => "/v1/oauth/authorize"})
+
+request_token = consumer.get_request_token()
+access_token = consumer.get_access_token(request_token, {}, {
+    :x_auth_mode => 'client_auth',
+    :x_auth_username => USERNAME,
+    :x_auth_password => PASSWORD})
+
+photos = []
+1.upto(10) do |page|
+    data = JSON.parse(access_token.get("/v1/photos?rpp=100&feature=popular&image_size=2048&only=Landscapes&page=#{page}").body)
+    photos += data['photos']
+end
+photos.delete_if do |photo|
+    photo['width'].to_i < 1200
+end
+File.open(File.join(__dir__, '..', 'lib', 'images.msh'), 'w') do |fd|
+    fd.puts Marshal.dump(photos)
+end
