@@ -28,7 +28,7 @@ access_token = consumer.get_access_token(request_token, {}, {
 
 photos = []
 1.upto(10) do |page|
-    data = JSON.parse(access_token.get("/v1/photos?rpp=100&feature=popular&image_size=2048&only=Landscapes&page=#{page}").body)
+    data = JSON.parse(access_token.get("/v1/photos?rpp=100&feature=popular&image_size=2048&only=Travel&page=#{page}").body)
     photos += data['photos']
 end
 photos.delete_if do |photo|
