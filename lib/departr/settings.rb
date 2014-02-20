@@ -3,8 +3,7 @@ module Departr
     extend self
 
     KEYS = [
-      :default_search, :open_in_new_page,
-      :calendar, :clock1, :clock2, :clock3
+      :default_search, :open_in_new_page
     ]
 
     def filename(provider, user)

@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = "departr"
-  s.version     = 0.5
+  s.version     = 0.5.1
   s.date        = '2014-02-20'
   s.platform    = Gem::Platform::RUBY
   s.author      = "Florent Solt"
@@ -15,7 +15,6 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency("tzinfo",            ["~> 1.1"])
   s.add_runtime_dependency("haml",              ["~> 4.0"])
   s.add_runtime_dependency("sass",              ["~> 3.2"])
   s.add_runtime_dependency("sinatra",           ["~> 1.4"])

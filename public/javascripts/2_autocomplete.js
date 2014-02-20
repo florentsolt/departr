@@ -118,8 +118,12 @@ var AutoComplete = new Class({
             case 'tab':
                 if (!this.isHidden()) {
                     e.stop();
-                    this.fireEvent('complete', [this.hover.retrieve('value')]);
-                    this.hide();
+                    if (this.hover != false) {
+                        this.fireEvent('complete', [this.hover.retrieve('value')]);
+                        this.hide();
+                    } else {
+                        this.showHover(this.box.getFirst('.match'))
+                    }
                 }
                 break;
         }

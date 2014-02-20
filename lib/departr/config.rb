@@ -10,18 +10,13 @@ module Departr
       :open_in_new_page => false,
       :default_search => "http://www.google.com/search?ie=UTF-8&oe=UTF-8&q=",
 
-      :calendar => true,
-      :clock1 => "Europe/Paris",
-      :clock2 => "America/New_York",
-      :clock3 => "America/Los_Angeles",
-
       # Default commands
 
       :commands => [
         {'name' => "google search for {words}", 'url' => "http://www.google.com/search?rls=en&q={words}&ie=UTF-8&oe=UTF-8"},
         {'name' => "google search for {words} in {lang}", 'url' => "http://www.google.com/search?rls={lang}&q={words}&ie=UTF-8&oe=UTF-8"},
         {'name' => "wikipedia search for {words}", 'url' => "http://en.wikipedia.org/wiki/{words}"},
-        {'name' => "twitter search for {words}", 'url' => "http://search.twitter.com/search?q={words}"},
+        {'name' => "twitter search for {words}", 'url' => "https://twitter.com/search?q={words}&src=typd"},
         {'name' => "youtube search for {words}", 'url' => "http://www.youtube.com/results?search_query={words}"},
         {'name' => "dailymotion search for {words}", 'url' => "http://www.dailymotion.com/relevance/search/{words}"},
         {'name' => "facebook search for {words}", 'url' => "http://www.facebook.com/search/?q={words}"},

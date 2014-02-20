@@ -58,16 +58,6 @@ module Departr
         end
         check
       end
-
-      def clock_label(tz)
-        return ''.to_json if not tz
-        tz.split('/').last.gsub('_', ' ').to_json
-      end
-
-      def clock_offset(tz)
-        return 0 if not tz
-        TZInfo::Timezone.get(tz).current_period.utc_total_offset / 3600
-      end
     end
 
     #-----------------------------------------------------------------------------

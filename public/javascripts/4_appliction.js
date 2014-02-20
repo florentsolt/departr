@@ -113,24 +113,6 @@ var Application = {
                         Settings.open_in_new_page = !Settings.open_in_new_page;
                     })
                     $('setting_open_in_new_page').checked = (Settings.open_in_new_page === true);
-
-                    $('setting_calendar').addEvent('click', function() {
-                        Settings.calendar = !Settings.calendar;
-                        $(window.parent.document).getElement('#date').setStyle('display', Settings.calendar === true ? 'block': 'none');
-                    })
-                    $('setting_calendar').checked = (Settings.calendar === true);
-
-                    $('setting_clock1').addEvent('change', function() {
-                        Settings.clock1 = this.value;
-                    });
-
-                    $('setting_clock2').addEvent('change', function() {
-                        Settings.clock2 = this.value;
-                    });
-
-                    $('setting_clock3').addEvent('change', function() {
-                        Settings.clock3 = this.value;
-                    });
                 }
             }
         });

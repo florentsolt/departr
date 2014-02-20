@@ -10,32 +10,4 @@
 
   %label{:for => "setting_open_in_new_page"} Open in a new page ?
   %input{:id => "setting_open_in_new_page", :type => :checkbox}
-  %hr 
 
-  %label{:for => "setting_clalendar"} Show calendar ?
-  %input{:id => "setting_calendar", :type => :checkbox}
-  %hr 
-
-  %label{:for => "setting_clock1"} First clock
-  %select{:id => "setting_clock1"}
-  %hr 
-
-  %label{:for => "setting_clock2"} Second clock
-  %select{:id => "setting_clock2"}
-  %hr 
-
-  %label{:for => "setting_clock3"} Third clock
-  %select{:id => "setting_clock3"}
-
-:javascript
-
-  // Reduce page size by inlining only 1 time the zone list
-  var zones = #{TZInfo::Timezone.all.collect(&:identifier).to_json};
-  ["clock1", "clock2", "clock3"].each(function(clock) {
-    new Element('option', {value: '-none', text: "Nothing"}).inject($('setting_' + clock));
-    zones.each(function(zone) {
-      var option = new Element('option', {value: zone, text: zone.replace(/_/g, ' ')})
-      if (Settings[clock] == zone) option.set('selected', 'selected');
-      option.inject($('setting_' + clock));
-    });
-  });
