@@ -11,6 +11,7 @@ module Departr
       super
       Departr::Config.instance_eval(&blk) if block_given?
       @config = Config
+      @images = Marshal.load(File.read(File.join(__dir__, '..', 'images.msh')))
     end
 
     #-----------------------------------------------------------------------------
@@ -177,8 +178,7 @@ module Departr
     end
 
     get '/' do
-      images = Marshal.load(File.read(File.join(__dir__, '..', 'images.msh')))
-      @background = images.sample
+      @background = @images.sample
       if auth?
         @commands = Command.get(@provider, @user)
         @settings = Settings.get(@provider, @user)
