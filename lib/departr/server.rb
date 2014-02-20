@@ -180,11 +180,9 @@ module Departr
       images = Marshal.load(File.read(File.join(__dir__, '..', 'images.msh')))
       @background = images.sample
       if auth?
-        etag "index-#{Command.etag(@provider, @user)}-#{Settings.etag(@provider, @user)}" if Server.production?
         @commands = Command.get(@provider, @user)
         @settings = Settings.get(@provider, @user)
       else
-        etag "default-#{Digest::SHA1.hexdigest(Command.default.inspect)}" if Server.production?
         response.delete_cookie("user")
         response.delete_cookie("session")
         @commands = Command.default
