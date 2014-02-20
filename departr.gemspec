@@ -19,4 +19,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("haml",              ["~> 4.0"])
   s.add_runtime_dependency("sass",              ["~> 3.2"])
   s.add_runtime_dependency("sinatra",           ["~> 1.4"])
+  s.add_runtime_dependency("oauth",             ["~> 0.4"])
 end
