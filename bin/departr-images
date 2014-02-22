@@ -31,9 +31,23 @@ photos = []
     data = JSON.parse(access_token.get("/v1/photos?rpp=100&feature=popular&image_size=2048&only=Travel&page=#{page}").body)
     photos += data['photos']
 end
+
+dir = File.join(__dir__, '..', 'public', 'images')
+Dir.mkdir(dir) if not File.exists? dir
+
 photos.delete_if do |photo|
     photo['width'].to_i < 1200
 end
+
+photos.each do |photo|
+    file = File.join(dir, "#{photo['id']}.jpg")
+    if not File.exists? file
+      puts "Download #{file}"
+      system("curl '#{photo['image_url']}' -o #{file}")
+      system("jpegtran -optimize -copy none -progressive -outfile #{file} #{file}")
+    end
+end
+
 File.open(File.join(__dir__, '..', 'lib', 'images.msh'), 'w') do |fd|
     fd.puts Marshal.dump(photos)
 end

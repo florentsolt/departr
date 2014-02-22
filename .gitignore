@@ -1,3 +1,4 @@
 config.ru
 Gemfile.lock
 .bundle
+public/images
