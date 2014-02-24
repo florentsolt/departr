@@ -27,7 +27,7 @@ access_token = consumer.get_access_token(request_token, {}, {
     :x_auth_password => PASSWORD})
 
 photos = []
-1.upto(10) do |page|
+1.upto(4) do |page|
     data = JSON.parse(access_token.get("/v1/photos?rpp=100&feature=popular&image_size=2048&only=Travel&page=#{page}").body)
     photos += data['photos']
 end
@@ -43,11 +43,23 @@ photos.each do |photo|
     file = File.join(dir, "#{photo['id']}.jpg")
     if not File.exists? file
       puts "Download #{file}"
-      system("curl '#{photo['image_url']}' -o #{file}")
+      system("curl -s '#{photo['image_url']}' -o #{file}")
       system("jpegtran -optimize -copy none -progressive -outfile #{file} #{file}")
     end
 end
 
 File.open(File.join(__dir__, '..', 'lib', 'images.msh'), 'w') do |fd|
     fd.puts Marshal.dump(photos)
+end
+
+ids = photos.map do |photo|
+  photo['id'].to_i
+end
+
+Dir[File.join(dir, "*.jpg")].each do |file|
+  id = File.basename(file, '.jpg').to_i
+  if not ids.include? id
+    puts "Remove #{file}"
+    File.unlink(file)
+  end
 end
