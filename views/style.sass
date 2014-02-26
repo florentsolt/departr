@@ -120,10 +120,11 @@ div#settings
 
 .autocomplete
   margin-top: 4px
-  border: 1px solid #ccc
-  background-color: #fff
+  border: 1px solid white
+  background-color: rgba(0,0,0,0.4)
   z-index: 50
   border-radius: 4px
+  color: white
 
   div
     margin:	1px
@@ -131,15 +132,15 @@ div#settings
     cursor: pointer
     font-weight: normal
     white-space: nowrap
-    font-size: 15px
+    font-size: 25px
     font-style: italic
     line-height: 1.5em
     display: none
 
   div.hovered
-    background: $webkit_gradient_inverted
-    background: $moz_gradient_inverted
-    color: #fff
+    background: white
+    background: rgba(255,255,255,0.6)
+    color: black
     border-radius: 4px
 
 
@@ -150,15 +151,10 @@ div#settings
 
 #commandline
   margin: 200px auto auto auto
-  width: 600px
+  width: 800px
   height: auto
-  padding: 15px 5px
   text-align: center
-  border: 1px solid #ccc
-  border-radius: 4px 4px
-  background-color: $color1
-  background: $webkit_gradient
-  background: $moz_gradient
+  background: transparent
 
 #input
   -webkit-appearance: textfield
@@ -166,12 +162,14 @@ div#settings
   margin: 0px
   top: 205px
   left: 215px
-  width: 550px
-  border: 0px solid red
+  width: 780px
+  border: 0px
+  border-bottom: 1px dotted white
   outline: none
-  font-size: 25px
-  height: 30px
-  color: black
+  font-size: 45px
+  font-weight: bold
+  height: 50px
+  color: white
   vertical-align: bottom
   background-color: transparent
 
@@ -180,28 +178,27 @@ div#settings
   width: 600px
   text-align: center
   margin: 10px auto auto auto
-  border: 0px solid red
+  border: 0px
 
   #label
-    color: black
+    color: white
     z-index: 2
-
-    span
-      color: #54acff
 
   #answer
     -webkit-appearance: textfield
     -webkit-user-select: text
-    border: 0px solid red
+    border: 0px
     outline: none
     padding: 0px
     width: 350px
-    color: black
+    color: white
     z-index: 1
     background-color: transparent
+    border-bottom: 1px dotted white
 
   #label,#answer
-    font-size: 20px
+    font-size: 45px
+    font-weight: bold
       
 // --------------------- Edit Popup --------------------------
 

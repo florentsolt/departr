@@ -3,3 +3,4 @@ Gemfile.lock
 .bundle
 public/images
 lib/images.msh
+log

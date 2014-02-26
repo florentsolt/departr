@@ -165,7 +165,7 @@ var Command = {
         var matches = $('input').value.match(Command.pattern);
         if (matches) {
             var answer = $('answer');
-            var label = matches[0].replace(Command.patternsCleaner, '').replace(/(.)$/, "<span>$1</span>");
+            var label = matches[0].replace(Command.patternsCleaner, '');
             $('label').set('html', label + ' &raquo; ');
             answer.value = '';
             $('question').setStyle('display', 'block');
