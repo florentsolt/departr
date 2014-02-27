@@ -188,18 +188,18 @@ var Command = {
           // In reverse to find the biggest command matching
           for (var i = Command.data.length - 1; i >= 0; i--) {
             var patterns = new RegExp(Command.pattern.source, 'g');
-            var re = new RegExp(Command.data[i].name.replace(patterns, '.*'));
-            if (this.input.value.match(re)) {
+            var re = new RegExp(Command.data[i].name.replace(patterns, '(.*)'));
+            var values = this.input.value.substr(1).match(re);
+            if (values) {
               var found = Command.data[i];
               var keywords = found.name.match(patterns);
-              re = new RegExp(found.name.replace(patterns, '(.+)'));
-              var values = this.input.value.match(re);
               var url = found.url;
-              // Replace all {keyword} in the right order by the corresponding value
-              for (var j = 0; j < keywords.length; j++) {
-                url = url.replace(keywords[j], values[j+1]);
+              if (keywords) {
+                // Replace all {keyword} in the right order by the corresponding value
+                for (var j = 0; j < keywords.length; j++) {
+                  url = url.replace(keywords[j], values[j+1]);
+                }
               }
-              // console.log(keywords, values, url);
               Command.go(url);
               return;
             }
