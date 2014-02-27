@@ -183,6 +183,29 @@ var Command = {
             return;
         }
 
+        // If it starts with ! find the corresponding command and go for it
+        if (this.input.value.charAt(0) == '!') {
+          // In reverse to find the biggest command matching
+          for (var i = Command.data.length - 1; i >= 0; i--) {
+            var patterns = new RegExp(Command.pattern.source, 'g');
+            var re = new RegExp(Command.data[i].name.replace(patterns, '.*'));
+            if (this.input.value.match(re)) {
+              var found = Command.data[i];
+              var keywords = found.name.match(patterns);
+              re = new RegExp(found.name.replace(patterns, '(.+)'));
+              var values = this.input.value.match(re);
+              var url = found.url;
+              // Replace all {keyword} in the right order by the corresponding value
+              for (var j = 0; j < keywords.length; j++) {
+                url = url.replace(keywords[j], values[j+1]);
+              }
+              // console.log(keywords, values, url);
+              Command.go(url);
+              return;
+            }
+          }
+        }
+
         // Default command
         if (!this.input.value.match(/^\s*$/)) {
             if (this.input.value.match(/^\s*(ftp|http|https):\/\//i)) {
@@ -226,7 +249,8 @@ var Command = {
                 return command.name;
             },
             filters: [function(o,v) {
-                return o.match(new RegExp(v.escapeRegExp().replace(/\s+/, '.*'), 'i'))
+                var re = new RegExp(v.escapeRegExp().replace(/\s+/, '.*'));
+                return o.match(re, 'i');
             }]
         }).addEvent('complete', function(value) {
             Command.selected = value.url;
@@ -276,13 +300,6 @@ var Command = {
             window.focus();
             $('input').focus();
         });
-
-        if ($('date')) {
-            var today = new Date;
-            var weekdays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-            $('date').getElement('.day').set('text', today.getDate());
-            $('date').getElement('.wday').set('text', weekdays[today.getDay()]);
-        }
     }
 };
 

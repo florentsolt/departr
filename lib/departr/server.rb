@@ -67,7 +67,7 @@ module Departr
     get '/javascripts/all.js' do
       content_type :js
 
-      if not defined? @@javascripts
+      if not defined? @@javascripts or not Server.production?
         @@javascripts = ''
         Dir[File.join(settings.root, 'public', 'javascripts', '*.js')].sort.delete_if do |file|
           not File.basename(file).match(/^\d+_/)
