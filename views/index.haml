@@ -2,9 +2,6 @@
 #background
 
 #credits
-  %a{:href => "http://500px.com/photo/#{@background['id']}"}
-    ©
-    = @background['user']['fullname']
 
 #header
   - if @config.get(:rpx)
@@ -20,19 +17,4 @@
   #question
     %label#label Question
     %input{:type => :text, :id => :answer, :name => :answer}
-:css
 
-  #background {
-    background-image: url(/images/#{@background['id']}.jpg);
-  }
-
-:javascript
-
-  // Globals
-  Command.data = #{@commands.to_json};
-  Settings = #{@settings.to_json};
-
-  window.addEvent('domready', function() {
-    Application.init();
-    Command.init();
-  });

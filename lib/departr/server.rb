@@ -167,17 +167,35 @@ module Departr
       haml :help
     end
 
-    get '/' do
-      @background = @images.sample
+    get '/background.jpg' do
+      background = @images.sample
+      response.set_cookie("bg_user", :value => background['user']['fullname'], :path => '/', :expires => Time.now + 60*60*24*365)
+      response.set_cookie("bg_id", :value => background['id'], :path => '/', :expires => Time.now + 60*60*24*365)
+      send_file File.join(__dir__, '..', '..', 'public', 'images', "#{background['id']}.jpg")
+    end
+
+    get '/javascripts/context.js' do
+      content_type :js
       if auth?
-        @commands = Command.get(@provider, @user)
-        @settings = Settings.get(@provider, @user)
+        etag "#{Command.etag(@provider, @user)}-#{Settings.etag(@provider, @user)}" if Server.production?
+        commands = Command.get(@provider, @user)
+        settings = Settings.get(@provider, @user)
       else
+        etag "default-#{Time.now.to_i / 3600*24}" if Server.production?
         response.delete_cookie("user")
         response.delete_cookie("session")
-        @commands = Command.default
-        @settings = Settings.default
+        commands = Command.default
+        settings = Settings.default
       end
+      "Command.data = #{commands.to_json};\n" +
+      "Settings = #{settings.to_json};"
+    end
+
+    get '/' do
+      dir = File.join(__dir__, '..', '..', 'views')
+      index = File.mtime(File.join(dir, 'index.haml')).to_i
+      layout = File.mtime(File.join(dir, 'layout.haml')).to_i
+      etag "#{layout}-#{index}" if Server.production?
       haml :index
     end
   end
