@@ -14,15 +14,7 @@ module Departr
       if File.exists? filename(provider, user)
         File.mtime(filename(provider, user))
       else
-        nil
-      end
-    end
-
-    def etag(provider, user)
-      begin
-        Digest::MD5.hexdigest(time(provider, user).to_s)
-      rescue
-        '-no-command-file-'
+        Time.at(0)
       end
     end
 

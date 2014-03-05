@@ -10,8 +10,12 @@ module Departr
       File.join(Config.data_path, provider, user, 'settings')
     end
 
-    def etag(provider, user)
-      Digest::MD5.hexdigest(get(provider, user).to_s)
+    def time(provider, user)
+      if File.exists? filename(provider, user)
+        File.mtime(filename(provider, user))
+      else
+        Time.at(0)
+      end
     end
 
     def get(provider, user)

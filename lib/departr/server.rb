@@ -69,17 +69,18 @@ module Departr
 
       if not defined? @@javascripts or not Server.production?
         @@javascripts = ''
+        @@javascripts_time = Time.at(0)
         Dir[File.join(settings.root, 'public', 'javascripts', '*.js')].sort.delete_if do |file|
           not File.basename(file).match(/^\d+_/)
         end.each do |file|
           @@javascripts << "\n/* #{File.basename(file)} */\n"
           @@javascripts << File.read(file)
+          @@javascripts_time = File.mtime(file) if File.mtime(file) > @@javascripts_time
         end
-        @@javascripts_checksum = Digest::SHA1.hexdigest(@@javascripts)
         @@javascripts = JSMin.minify(@@javascripts) if Server.production?
       end
 
-      etag "js-#{@@javascripts_checksum}" if Server.production?
+      last_modified @@javascripts_time
       @@javascripts
     end
 
@@ -87,7 +88,7 @@ module Departr
       content_type :css
       if Server.production?
         time = File.mtime(File.join(settings.root, 'views', 'style.sass'))
-        etag "css-#{time.to_i}"
+        last_modified time
       end
       sass :style
     end
@@ -181,11 +182,10 @@ module Departr
     get '/javascripts/context.js' do
       content_type :js
       if auth?
-        etag "#{Command.etag(@provider, @user)}-#{Settings.etag(@provider, @user)}" if Server.production?
+        last_modified [Command.time(@provider, @user), Settings.time(@provider, @user)].max if Server.production?
         commands = Command.get(@provider, @user)
         settings = Settings.get(@provider, @user)
       else
-        etag "default-#{Time.now.to_i / 3600*24}" if Server.production?
         response.delete_cookie("user")
         response.delete_cookie("session")
         commands = Command.default
