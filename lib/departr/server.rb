@@ -175,8 +175,7 @@ module Departr
       headers 'Cache-Control' => "no-cache, no-store, must-revalidate",
         'Pragma' => 'no-cache',
         'Expires' => '0'
-
-      send_file File.join(__dir__, '..', '..', 'public', 'images', "#{background['id']}.jpg")
+      redirect "/images/#{background['id']}.jpg"
     end
 
     get '/javascripts/context.js' do
