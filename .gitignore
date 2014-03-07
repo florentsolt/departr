@@ -4,3 +4,4 @@ Gemfile.lock
 public/images
 lib/images.msh
 log
+.DS_Store
