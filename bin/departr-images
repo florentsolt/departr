@@ -48,6 +48,19 @@ photos.each do |photo|
     end
 end
 
+photos.delete_if do |photo|
+  file = File.join(dir, "#{photo['id']}.jpg")
+  md5 = `md5sum #{file}`.strip.split(' ').first
+  if md5 == '92ec602c88283582b9e322ba7dffccde'
+    # If the file is "Your image is loading..."
+    puts "Skipping #{file}"
+    File.unlink file
+    true
+  else
+    false
+  end
+end
+
 File.open(File.join(__dir__, '..', 'lib', 'images.msh'), 'w') do |fd|
     fd.puts Marshal.dump(photos)
 end
