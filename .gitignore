@@ -6,3 +6,4 @@ lib/images.msh
 log
 .DS_Store
 *.gem
+*.sublime-*

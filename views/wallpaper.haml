@@ -1,0 +1,29 @@
+-# coding: utf-8
+!!! 1.1
+%html
+  %head
+    %title Departr
+    %link{:rel => :icon, :type => "image/png", :href => "/favicon.ico"}
+    %meta{'http-equiv' => 'content-type', :content => 'text/html; charset=utf-8'}
+    %link{:rel => :stylesheet, :href => "/stylesheets/all.css", :type => "text/css"}
+    %script{:type => 'text/javascript', :src => '/javascripts/1_mootools.js'}
+  %body
+    #background
+    #credits
+
+    :css
+        #background:after {
+            top: 0;
+        }
+
+    :javascript
+
+        window.addEvent('domready', function() {
+          if (Cookie.read('bg_id') && Cookie.read('bg_user')) {
+            var credits = $('credits');
+            var a = new Element('a', {
+              'href': 'http://500px.com/photo/' + Cookie.read('bg_id'),
+              'text': '© ' + Cookie.read('bg_user').replace(/\+/g," ")
+            }).inject(credits)
+          }
+        });

@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name        = "departr"
-  s.version     = "0.6"
+  s.version     = "0.7"
   s.date        = '2014-02-20'
   s.platform    = Gem::Platform::RUBY
   s.author      = "Florent Solt"

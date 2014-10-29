@@ -194,6 +194,10 @@ module Departr
       "Settings = #{settings.to_json};"
     end
 
+    get '/wallpaper' do
+      haml :wallpaper, :layout => false
+    end
+
     get '/' do
       dir = File.join(__dir__, '..', '..', 'views')
       index = File.mtime(File.join(dir, 'index.haml')).to_i
