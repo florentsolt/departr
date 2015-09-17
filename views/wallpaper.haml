@@ -9,21 +9,3 @@
     %script{:type => 'text/javascript', :src => '/javascripts/1_mootools.js'}
   %body
     #background
-    #credits
-
-    :css
-        #background:after {
-            top: 0;
-        }
-
-    :javascript
-
-        window.addEvent('domready', function() {
-          if (Cookie.read('bg_id') && Cookie.read('bg_user')) {
-            var credits = $('credits');
-            var a = new Element('a', {
-              'href': 'http://500px.com/photo/' + Cookie.read('bg_id'),
-              'text': '© ' + Cookie.read('bg_user').replace(/\+/g," ")
-            }).inject(credits)
-          }
-        });

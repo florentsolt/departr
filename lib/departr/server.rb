@@ -170,8 +170,6 @@ module Departr
 
     get '/background.jpg' do
       background = @images.sample
-      response.set_cookie("bg_user", :value => background['user']['fullname'], :path => '/', :expires => Time.now + 60*60*24*365)
-      response.set_cookie("bg_id", :value => background['id'], :path => '/', :expires => Time.now + 60*60*24*365)
       headers 'Cache-Control' => "no-cache, no-store, must-revalidate",
         'Pragma' => 'no-cache',
         'Expires' => '0'
