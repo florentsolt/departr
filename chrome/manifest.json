@@ -3,7 +3,7 @@
 
     "name": "Departr",
     "description": "Departr is new tab replacement that display a nice picture.",
-    "version": "1.5.0",
+    "version": "1.5.1",
 
     "permissions": [ "tabs", "http://departr.solt.biz/*" ],
 
