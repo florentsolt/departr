@@ -1,9 +1,8 @@
-config.ru
-Gemfile.lock
-.bundle
-public/images
-lib/images.msh
-log
 .DS_Store
-*.gem
-*.sublime-*
+node_modules
+backgrounds
+start
+stop
+nodejs.pid
+nodejs.log
+nginx.conf
