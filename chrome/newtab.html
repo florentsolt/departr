@@ -3,7 +3,14 @@
 <head>
 <title>Departr</title>
 <meta content='text/html; charset=utf-8' http-equiv='content-type' />
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
+<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
 <style>
+
+body {
+  background-color: black;
+  overflow: hidden;
+}
 
 #background {
   width: 100%;
@@ -17,6 +24,10 @@
   background-repeat: none;
   background-image: url(https://departr.solt.biz/background.jpg);
   z-index: -1;
+  animation-name: imageAnimation;
+  animation-delay: 0s;
+  animation-duration: 10s;
+  transform: scale(1.1);
 }
 
 #background:after {
@@ -30,10 +41,91 @@
   background-image: url("data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhJREFUeNpiYGBgePz//38GRhABAgABBgBFTAbfCBNE2AAAAABJRU5ErkJggg==");
 }
 
+@keyframes imageAnimation { 
+  from {
+    opacity: 0;
+    transform: scale(1.0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+#datetime {
+  position: relative;
+  font-family: 'Comfortaa', cursive;
+}
+
+#text {
+  position: absolute;
+  right: 270px;
+  top: 100px;
+  font-size: 40px;
+  color: white;
+  text-align: center;
+  line-height: 1.4em;
+  text-shadow: 0px 0px 2px black; 
+}
+
+svg {
+  display: block;
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  transform: scale(0.8);
+}
+
 </style>
 </head>
 <body>
 <div id='background'></div>
+
+<div id='datetime'>
+  <div id='text'></div>
+  <svg width="200" height="200">
+    
+    <filter id="innerShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+        <feOffset in="blur" dx="1.5" dy="1.5"/>
+    </filter>
+    
+    <g>
+      <circle id="shadow" style="fill:rgba(0,0,0,0.1)" cx="97" cy="100" r="87" filter="url(#innerShadow)"></circle>
+      <circle id="circle" style="stroke: #FFF; stroke-width: 12px; fill:transparent" cx="100" cy="100" r="80"></circle>
+    </g>
+    
+    <g>
+      <line x1="100" y1="100" x2="100" y2="55" transform="rotate(80 100 100)" style="stroke-width: 3px; stroke: #FFF;" id="hourhand">
+        <animatetransform attributeName="transform"
+          attributeType="XML"
+          type="rotate"
+          dur="43200s"
+          repeatCount="indefinite"/>
+      </line>
+      <line x1="100" y1="100" x2="100" y2="40" style="stroke-width: 4px; stroke: #fff;" id="minutehand">
+        <animatetransform attributeName="transform"
+          attributeType="XML"
+          type="rotate"
+          dur="3600s"
+          repeatCount="indefinite"/>
+      </line>
+      <line x1="100" y1="100" x2="100" y2="30" style="stroke-width: 2px; stroke: #fff;" id="secondhand">
+        <animatetransform attributeName="transform"
+          attributeType="XML"
+          type="rotate"
+          dur="60s"
+          repeatCount="indefinite"/>
+      </line>
+    </g>
+
+    <circle id="center" style="fill:#fff; stroke: #fff; stroke-width: 2px;" cx="100" cy="100" r="3"></circle>
+    
+  </svg>
+</div>
+<script type="text/javascript" src="/newtab.js"></script>
+
 </body>
 </html>
 
