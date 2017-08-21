@@ -4,12 +4,13 @@
 <title>Departr</title>
 <meta content='text/html; charset=utf-8' http-equiv='content-type' />
 <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline'">
-<link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Economica" rel="stylesheet">
 <style>
 
 body {
   background-color: black;
   overflow: hidden;
+  user-select: none;
 }
 
 #background {
@@ -30,14 +31,12 @@ body {
   transform: scale(1.1);
 }
 
-#background:after {
+#pattern {
   width: 100%;
+  height: 100%;
   position: absolute;
-  font-size: 14px;
   top: 0px;
   left: 0px;
-  bottom: 0px;
-  content: "";
   background-image: url("data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABhJREFUeNpiYGBgePz//38GRhABAgABBgBFTAbfCBNE2AAAAABJRU5ErkJggg==");
 }
 
@@ -53,77 +52,77 @@ body {
   }
 }
 
-#datetime {
-  position: relative;
-  font-family: 'Comfortaa', cursive;
-}
-
 #text {
+  background-color: rgba(0,0,0,0.5);
+  font-family: 'Economica';
   position: absolute;
-  right: 270px;
-  top: 100px;
+  padding-top: 5px;
+  padding-left: 20px;
+  padding-right: 150px;
+  top: 70px;
+  right: 0px;
+  height: 120px;
   font-size: 40px;
   color: white;
   text-align: center;
   line-height: 1.4em;
-  text-shadow: 0px 0px 2px black; 
+  text-shadow: 0px 0px 1px black; 
 }
 
 svg {
   display: block;
+  top: 33px;
+  right: -30px;
   position: absolute;
-  top: 50px;
-  right: 50px;
-  transform: scale(0.8);
+  transform: scale(0.55);
+  filter: drop-shadow(0px 0px 1px black); 
 }
 
 </style>
 </head>
 <body>
 <div id='background'></div>
+<div id='pattern'></div>
 
-<div id='datetime'>
-  <div id='text'></div>
-  <svg width="200" height="200">
-    
-    <filter id="innerShadow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
-        <feOffset in="blur" dx="1.5" dy="1.5"/>
-    </filter>
-    
-    <g>
-      <circle id="shadow" style="fill:rgba(0,0,0,0.1)" cx="97" cy="100" r="87" filter="url(#innerShadow)"></circle>
-      <circle id="circle" style="stroke: #FFF; stroke-width: 12px; fill:transparent" cx="100" cy="100" r="80"></circle>
-    </g>
-    
-    <g>
-      <line x1="100" y1="100" x2="100" y2="55" transform="rotate(80 100 100)" style="stroke-width: 3px; stroke: #FFF;" id="hourhand">
-        <animatetransform attributeName="transform"
-          attributeType="XML"
-          type="rotate"
-          dur="43200s"
-          repeatCount="indefinite"/>
-      </line>
-      <line x1="100" y1="100" x2="100" y2="40" style="stroke-width: 4px; stroke: #fff;" id="minutehand">
-        <animatetransform attributeName="transform"
-          attributeType="XML"
-          type="rotate"
-          dur="3600s"
-          repeatCount="indefinite"/>
-      </line>
-      <line x1="100" y1="100" x2="100" y2="30" style="stroke-width: 2px; stroke: #fff;" id="secondhand">
-        <animatetransform attributeName="transform"
-          attributeType="XML"
-          type="rotate"
-          dur="60s"
-          repeatCount="indefinite"/>
-      </line>
-    </g>
+<div id='text'></div>
+<svg width="200" height="200">
+  
+  <g>
+    <circle id="circle" style="stroke: #FFF; stroke-width: 5px; fill:transparent" cx="100" cy="100" r="80"></circle>
+  </g>
+  
+  <g>
+    <line x1="100" y1="100" x2="100" y2="55" transform="rotate(80 100 100)" style="stroke-width: 3px; stroke: #FFF;" id="hourhand">
+      <animatetransform attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        dur="43200s"
+        repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="100" x2="100" y2="40" style="stroke-width: 4px; stroke: #fff;" id="minutehand">
+      <animatetransform attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        dur="3600s"
+        repeatCount="indefinite"/>
+    </line>
+    <line x1="100" y1="100" x2="100" y2="30" style="stroke-width: 2px; stroke: #fff;" id="secondhand">
+      <animatetransform attributeName="transform"
+        attributeType="XML"
+        type="rotate"
+        dur="60s"
+        repeatCount="indefinite"/>
+    </line>
+  </g>
 
-    <circle id="center" style="fill:#fff; stroke: #fff; stroke-width: 2px;" cx="100" cy="100" r="3"></circle>
-    
-  </svg>
-</div>
+  <circle id="center" style="fill:#fff; stroke: #fff; stroke-width: 2px;" cx="100" cy="100" r="3"></circle>
+  
+</svg>
+
+<div id="weather"></div>
+
+<script type="text/javascript" src="/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery.simpleWeather.min.js"></script>
 <script type="text/javascript" src="/newtab.js"></script>
 
 </body>

@@ -3,9 +3,14 @@
 
     "name": "Departr",
     "description": "Departr is new tab replacement that display a nice picture.",
-    "version": "1.6.0",
+    "version": "1.7.0",
 
-    "permissions": [ "tabs", "https://departr.solt.biz/*" ],
+    "permissions": [ 
+        "tabs",
+        "geolocation",
+        "https://query.yahooapis.com/*",
+        "https://departr.solt.biz/*" 
+    ],
 
     "chrome_url_overrides": {
         "newtab": "newtab.html"
